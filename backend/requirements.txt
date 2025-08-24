@@ -8,7 +8,7 @@ botocore
 python-multipart
 authlib
 itsdangerous
-elasticsearch>=8.0.0
+elasticsearch
 langchain-core
 langchain-community
 langchain-docling
@@ -24,3 +24,4 @@ langchain-tests
 langchain-text-splitters
 langchain-unstructured
 qdrant-client
+sentence-transformers
