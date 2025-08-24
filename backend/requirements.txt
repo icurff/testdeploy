@@ -18,3 +18,4 @@ langchain-docling
 sentence-transformers
 qdrant-client
 elasticsearch
+itsdangerous
