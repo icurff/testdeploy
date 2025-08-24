@@ -24,4 +24,5 @@ langchain-tests
 langchain-text-splitters
 langchain-unstructured
 qdrant-client
+scikit-learn
 sentence-transformers
