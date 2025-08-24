@@ -1,7 +1,6 @@
-# Use Python 3.11 slim image
+
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
 # Install system dependencies
@@ -14,20 +13,18 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements first
 COPY requirements.txt .
 
-# Install torch CPU-only
-RUN pip install --no-cache-dir torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+# Install torch + torchvision CPU-only (version khớp nhau)
+RUN pip install --no-cache-dir torch==2.8.0 torchvision==0.19.0 --index-url https://download.pytorch.org/whl/cpu
 
-# Install transformers + sentence-transformers (no deps to avoid pulling torchvision)
-RUN pip install --no-cache-dir transformers>=4.41.2
-RUN pip install --no-cache-dir --no-deps sentence-transformers
+# Install sentence-transformers và transformers
+RUN pip install --no-cache-dir "transformers>=4.41.2"
+RUN pip install --no-cache-dir sentence-transformers
 
-# Install other dependencies
+# Install remaining dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
 COPY . .
 
-# Expose port
 EXPOSE 8000
 
 # Create non-root user
