@@ -19,3 +19,4 @@ sentence-transformers
 qdrant-client
 elasticsearch
 itsdangerous
+langchain_elasticsearch

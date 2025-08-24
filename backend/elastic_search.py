@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch, helpers
 from langchain_elasticsearch import ElasticsearchRetriever
 
 es_client = Elasticsearch("https://my-elasticsearch-project-b2562c.es.ap-southeast-1.aws.elastic.cloud:443",
-                          api_key=os.environ["ELASTIC_SEARCH_API_KEY"])
+                          api_key=os.environ.get("ELASTIC_SEARCH_API_KEY"))
 
 text_field = "content"
 
@@ -68,7 +68,7 @@ def bm25_search(username, query):
         body_func=bm25_query,
         content_field=text_field,
         url= "https://my-elasticsearch-project-b2562c.es.ap-southeast-1.aws.elastic.cloud:443",
-        api_key=os.environ["ELASTIC_SEARCH_API_KEY"],
+        api_key=os.environ.get("ELASTIC_SEARCH_API_KEY"),
     )
 
     return bm25_retriever.invoke(query)
