@@ -76,6 +76,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost:5173",
+    "http://165.22.103.53",
+    "https://165.22.103.53",
 ]
 
 app.add_middleware(
