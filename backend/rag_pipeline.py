@@ -16,13 +16,6 @@ from hyde import get_hypo_doc  # HyDE: sinh câu hỏi giả định
 from dense import find_similarity  # Tìm kiếm dense (vector)
 
 from fusion import rrf_fusion  # Fusion hai kết quả
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import CrossEncoderReranker
-from langchain_community.cross_encoders import HuggingFaceCrossEncoder
-
-from typing import Any, List
-
-from langchain.schema import BaseRetriever
 
 
 

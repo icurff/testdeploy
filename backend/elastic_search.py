@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch, helpers
 from langchain_elasticsearch import ElasticsearchRetriever
 
 es_client = Elasticsearch("https://my-elasticsearch-project-b2562c.es.ap-southeast-1.aws.elastic.cloud:443",
-                          api_key="ak5XLTBwZ0JvS1lwVGc3dWwtNEE6emhaX0tDTWtLcUtmVWFReWV3U1drZw==")
+                          api_key=os.environ["ELASTIC_SEARCH_API_KEY"])
 
 text_field = "content"
 
