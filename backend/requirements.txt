@@ -25,4 +25,7 @@ langchain-text-splitters
 langchain-unstructured
 qdrant-client
 scikit-learn
-sentence-transformers
+torch==2.1.2
+torchvision==0.16.2
+transformers==4.36.2
+sentence-transformers==2.2.2
