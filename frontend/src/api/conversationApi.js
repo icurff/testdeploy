@@ -4,7 +4,7 @@ import CustomAxios from "../config/CustomAxios";
 export const conversationAPI = {
   // Lấy tất cả conversations của user
   getConversations: async () => {
-    const response = await CustomAxios.get("/conversations");
+    const response = await CustomAxios.get("/api/conversations");
     return response.data;
   },
 
@@ -15,13 +15,13 @@ export const conversationAPI = {
       typeof name === "string" && name.trim().length > 0
         ? { name: name.trim() }
         : {};
-    const response = await CustomAxios.post("/conversations", payload);
+    const response = await CustomAxios.post("/api/conversations", payload);
     return response.data;
   },
 
   // Cập nhật conversation
   updateConversation: async (convId, name) => {
-    const response = await CustomAxios.put(`/conversations/${convId}`, {
+    const response = await CustomAxios.put(`/api/conversations/${convId}`, {
       name,
     });
     return response.data;
@@ -29,13 +29,13 @@ export const conversationAPI = {
 
   // Xóa conversation
   deleteConversation: async (convId) => {
-    const response = await CustomAxios.delete(`/conversations/${convId}`);
+    const response = await CustomAxios.delete(`/api/conversations/${convId}`);
     return response.data;
   },
 
   // Gửi tin nhắn trong conversation
   sendMessage: async (convId, question) => {
-    const response = await CustomAxios.post("/chat/send", {
+    const response = await CustomAxios.post("/api/chat/send", {
       conv_id: convId,
       question,
     });
@@ -44,7 +44,7 @@ export const conversationAPI = {
 
   // Lấy lịch sử hội thoại của 1 conversation
   getConversationHistory: async (convId) => {
-    const response = await CustomAxios.get(`/conversations/${convId}/history`);
+    const response = await CustomAxios.get(`/api/conversations/${convId}/history`);
     return response.data;
   },
 };

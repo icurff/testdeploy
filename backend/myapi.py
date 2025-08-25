@@ -174,7 +174,7 @@ def get_document_status(username: str):
         return {"status": "no_documents", "updated_at": datetime.now(timezone.utc).isoformat()}
 
 # Upload documents and process
-@app.post("/upload/")
+@app.post("/api/upload/")
 async def upload_files( files: List[UploadFile] = File(...),
                        user_data: dict = Depends(auth_middleware)):
     results = []
@@ -274,7 +274,7 @@ def process_files(embed_model, file_urls: List[str], username: str):
         update_document_status(username, "error")
 
 # Get documents
-@app.get("/documents/")
+@app.get("/api/documents/")
 async def list_documents(user_data: dict = Depends(auth_middleware)):
     """List all documents for the authenticated user"""
     bucket_name = "arag"
@@ -289,7 +289,7 @@ async def list_documents(user_data: dict = Depends(auth_middleware)):
         raise HTTPException(status_code=500, detail="Failed to list documents")
 
 # Get document processing status
-@app.get("/documents/status")
+@app.get("/api/documents/status")
 async def get_documents_status(user_data: dict = Depends(auth_middleware)):
     """Get the current processing status of documents for the user"""
     username = user_data["username"]
@@ -301,7 +301,7 @@ async def get_documents_status(user_data: dict = Depends(auth_middleware)):
         raise HTTPException(status_code=500, detail="Failed to get document status")
 
 # Process documents manually
-@app.post("/documents/process")
+@app.post("/api/documents/process")
 async def process_documents(background_tasks: BackgroundTasks, user_data: dict = Depends(auth_middleware)):
     """Manually trigger document processing"""
     username = user_data["username"]
@@ -336,7 +336,7 @@ async def process_documents(background_tasks: BackgroundTasks, user_data: dict =
         raise HTTPException(status_code=500, detail="Failed to start document processing")
 
 # Delete document
-@app.delete("/documents/{file_key:path}")
+@app.delete("/api/documents/{file_key:path}")
 async def delete_document(file_key: str, user_data: dict = Depends(auth_middleware)):
     """Delete a specific document from S3"""
     bucket_name = "arag"
@@ -392,7 +392,7 @@ class ChatRequestNew(BaseModel):
     question: str
 
 # send a message
-@app.post("/chat/send")
+@app.post("/api/chat/send")
 async def chat_send(req: ChatRequestNew, user_data: dict = Depends(auth_middleware)):
 
     try:
@@ -464,13 +464,13 @@ oauth.register(
 )
 
 
-@app.get("/me")
+@app.get("/api/me")
 async def get_current_user(user_data: dict = Depends(auth_middleware)):
     return user_data
 
 
 # Conversation Management APIs
-@app.get("/conversations")
+@app.get("/api/conversations")
 async def get_conversations(user_data: dict = Depends(auth_middleware)):
     """Lấy tất cả conversations của user"""
     try:
@@ -497,7 +497,7 @@ async def get_conversations(user_data: dict = Depends(auth_middleware)):
         raise HTTPException(status_code=500, detail="Failed to get conversations")
 
 
-@app.post("/conversations")
+@app.post("/api/conversations")
 async def create_conversation(
         req: ConversationRequest,
         user_data: dict = Depends(auth_middleware)
@@ -533,7 +533,7 @@ async def create_conversation(
         raise HTTPException(status_code=500, detail="Failed to create conversation")
 
 
-@app.put("/conversations/{conv_id}")
+@app.put("/api/conversations/{conv_id}")
 async def update_conversation(
         conv_id: str,
         req: ConversationUpdateRequest,
@@ -580,7 +580,7 @@ async def update_conversation(
         raise HTTPException(status_code=500, detail="Failed to update conversation")
 
 
-@app.delete("/conversations/{conv_id}")
+@app.delete("/api/conversations/{conv_id}")
 async def delete_conversation(
         conv_id: str,
         user_data: dict = Depends(auth_middleware)
@@ -617,7 +617,7 @@ async def delete_conversation(
         raise HTTPException(status_code=500, detail="Failed to delete conversation")
 
 
-@app.get("/conversations/{conv_id}/history")
+@app.get("/api/conversations/{conv_id}/history")
 async def get_conversation_history(conv_id: str, user_data: dict = Depends(auth_middleware)):
     """Return normalized message history for a specific conversation"""
     try:

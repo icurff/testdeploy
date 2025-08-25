@@ -11,7 +11,7 @@ const documentsAPI = {
       formData.append("files", file);
     });
 
-    const response = await CustomAxios.post("/upload/", formData, {
+    const response = await CustomAxios.post("/api/upload/", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -21,7 +21,7 @@ const documentsAPI = {
 
   getDocuments: async () => {
     try {
-      const response = await CustomAxios.get("/documents/");
+      const response = await CustomAxios.get("/api/documents/");
 
       if (!response.data.documents) {
         console.warn("⚠️ No documents field in response:", response.data);
@@ -49,7 +49,7 @@ const documentsAPI = {
 
   getDocumentStatus: async () => {
     try {
-      const response = await CustomAxios.get("/documents/status");
+      const response = await CustomAxios.get("/api/documents/status");
       return response.data;
     } catch (error) {
       console.error("Failed to get document status:", error);
@@ -59,7 +59,7 @@ const documentsAPI = {
 
   processDocuments: async () => {
     try {
-      const response = await CustomAxios.post("/documents/process");
+      const response = await CustomAxios.post("/api/documents/process");
       return response.data;
     } catch (error) {
       console.error("Failed to process documents:", error);
@@ -70,7 +70,7 @@ const documentsAPI = {
   deleteDocument: async (documentId) => {
     try {
       // documentId is actually the S3 key
-      await CustomAxios.delete(`/documents/${encodeURIComponent(documentId)}`);
+      await CustomAxios.delete(`/api/documents/${encodeURIComponent(documentId)}`);
       return documentId;
     } catch (error) {
       console.error("Failed to delete document from backend:", error);

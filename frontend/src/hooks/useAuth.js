@@ -59,7 +59,7 @@ const authAPI = {
       return null;
     }
     try {
-      const res = await CustomAxios.get("/me");
+      const res = await CustomAxios.get("/api/me");
       return res.data;
     } catch {
       // Clear all auth data on error
