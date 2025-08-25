@@ -15,12 +15,6 @@ services:
       - ./backend:/app
       - /app/node_modules
     restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
 
   frontend:
     build:
@@ -36,12 +30,6 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:80"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
 
 volumes:
   backend_data:
