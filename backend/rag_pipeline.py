@@ -28,11 +28,11 @@ def retrieve(query: str, llm, embed_model, username: str) -> list[Document]:
     print_timestamp("📍 [Embed] Embedding hypo_doc and finding dense similarity...")
     hypo_emb = embed_model.embed_query(hypo_doc)
     dense_results = find_similarity(hypo_emb, k=10, embed_model=embed_model, username=username)
-    print(f"🔎 Dense results (top 10): {[doc.metadata.get('source', '') for doc in dense_results]}")
+    print(f"🔎 Dense results: {[doc.metadata.get('source', '') for doc in dense_results]}")
 
     print_timestamp("🔍 Lexical search...")
     sparse_results = bm25_search(username,query)
-    print(f"🧾 Sparse results (top 5): {[doc.metadata.get('source', '') for doc in sparse_results]}")
+    print(f"🧾 Sparse results: {[doc.metadata.get('source', '') for doc in sparse_results]}")
 
     print_timestamp("🔗 [Fusion] RRF Fusion of dense + sparse...")
     combined_results = rrf_fusion([dense_results,sparse_results])
