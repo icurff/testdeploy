@@ -449,7 +449,8 @@ async def chat_send(req: ChatRequestNew, user_data: dict = Depends(auth_middlewa
     except HTTPException:
         raise
     except Exception as e:
-        print(f"Error in chat_send: {str(e)}")
+        print("Error in chat_send:", str(e))
+        traceback.print_exc()  # in full stack trace ra stdout/log
         raise HTTPException(status_code=500, detail="Failed to send message")
 
 
