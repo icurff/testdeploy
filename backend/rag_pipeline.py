@@ -40,7 +40,7 @@ def retrieve(query: str, llm, embed_model, username: str) -> list[Document]:
     for i, doc in enumerate(combined_results[:5]):
         print(f"  {i + 1}.- {doc.page_content}...")
 
-    return combined_results[:5]
+    return combined_results[:10]
 
 
 # ==== Chains ====
@@ -48,11 +48,11 @@ def create_rag_chain(llm, embed_model, reranker, username):
     def _retrieve(inputs: dict) -> dict:
         query = inputs["question"]
         docs = retrieve(query, llm, embed_model, username)
-        # print("⚖️ [Reranker] Re-ranking fused results...")
-        # reranked_docs = reranker.compress_documents(docs,query)
+        print("⚖️ [Reranker] Re-ranking fused results...")
+        reranked_docs = reranker.compress_documents(docs,query)
 
         return {
-            "context": "\n\n".join(doc.page_content for doc in docs),
+            "context": "\n\n".join(doc.page_content for doc in reranked_docs),
             "question": query,
             "history": inputs.get("history", [])
         }
