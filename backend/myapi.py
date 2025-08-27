@@ -217,13 +217,13 @@ def process_files(embed_model, file_urls: List[str], username: str):
     try:
         # --- Choose text splitter ---
         print_timestamp("Initializing text splitter")
-        splitter = SemanticChunker(
-            embeddings=embed_model,
-            breakpoint_threshold_type="percentile",
-            breakpoint_threshold_amount=95
-        )
+        # splitter = SemanticChunker(
+        #     embeddings=embed_model,
+        #     breakpoint_threshold_type="percentile",
+        #     breakpoint_threshold_amount=95
+        # )
 
-        # splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=500)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=500)
 
         # --- Load and split documents ---
         for file_url in file_urls:
