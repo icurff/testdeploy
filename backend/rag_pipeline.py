@@ -103,21 +103,47 @@ def create_chat_chain(llm):
 
 # ==== Prompt Template ====
 rag_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful assistant. Use the following context to answer the question."),
-    ("system", "{context}"),
+    (
+        "system",
+        """
+Bạn là một trợ lý RAG chính xác và súc tích.
+Sử dụng nội dung trong mục Context để trả lời câu hỏi. Quy tắc:
+- Nếu thông tin không có trong Context, nói rõ: "Tôi không tìm thấy thông tin trong tài liệu." và đề xuất câu hỏi làm rõ ngắn gọn.
+- Trích xuất chính xác số liệu, tên riêng, định nghĩa khi có. Không bịa.
+- Trả lời ngắn gọn 2–5 câu; dùng gạch đầu dòng khi phù hợp.
+Context:
+{context}
+"""
+    ),
     MessagesPlaceholder(variable_name="history", optional=True),
     ("human", "{question}"),
 ])
 
 search_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a search assistant. Use the search results to answer the question."),
-    ("system", "{context}"),
+    (
+        "system",
+        """
+Bạn là một trợ lý tổng hợp từ kết quả tìm kiếm web.
+Kết hợp các đoạn liên quan trong Context để trả lời. Quy tắc:
+- Nêu rõ khi thông tin mâu thuẫn hoặc thiếu.
+- Tránh suy đoán; chỉ dùng nội dung trong Context.
+- Cung cấp câu trả lời ngắn gọn và có cấu trúc.
+Context (web results):
+{context}
+"""
+    ),
     MessagesPlaceholder(variable_name="history", optional=True),
     ("human", "{question}"),
 ])
 
 chat_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a friendly chatbot."),
+    (
+        "system",
+        """
+Bạn là một chatbot thân thiện, lịch sự, trả lời ngắn gọn, rõ ràng.
+Ưu tiên trả lời trực tiếp câu hỏi; tránh vòng vo.
+"""
+    ),
     MessagesPlaceholder(variable_name="history", optional=True),
     ("human", "{question}"),
 ])

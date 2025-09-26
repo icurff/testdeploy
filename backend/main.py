@@ -4,12 +4,12 @@ from langchain_core.runnables import RunnableLambda
 
 # Prompt chỉ yêu cầu trả về label
 classification_prompt = PromptTemplate.from_template("""
-You are a classifier that routes user questions into one of the following categories:
-- retrieve: the question requires knowledge from documents.
-- search: the question needs real-time or external information.
-- chitchat: the question is casual or small talk.
+You are a routing classifier. Classify the user's question into exactly one of:
+- retrieve: needs knowledge grounded in our indexed documents (RAG).
+- search: needs up-to-date or external web information.
+- chitchat: small talk or conversational without knowledge needs.
 
-Return only one word: retrieve, search, or chitchat.
+Return only one lowercase word: retrieve, search, or chitchat.
 Question: {question}
 """)
 
